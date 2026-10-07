@@ -1,0 +1,3211 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Teacher World ★</title>
+
+<style>
+
+/* =========================================================
+   CONFIGURAÇÕES GERAIS
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+button,
+a {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+#loading {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    background: #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: opacity 1.5s ease;
+}
+
+.loading-content {
+    width: 80%;
+    max-width: 650px;
+    text-align: center;
+}
+
+.loading-title {
+    font-size: clamp(55px, 10vw, 100px);
+    font-weight: 900;
+    line-height: .8;
+    letter-spacing: 5px;
+}
+
+.loading-title span {
+    display: block;
+    color: #a600ff;
+    font-size: clamp(25px, 5vw, 40px);
+    margin-top: 18px;
+}
+
+.loading-text {
+    color: #777;
+    margin: 40px 0 15px;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 7px;
+    background: #222;
+    overflow: hidden;
+}
+
+#loadingProgress {
+    width: 0%;
+    height: 100%;
+    background: #fff;
+}
+
+#loadingPercent {
+    color: #aaa;
+    margin-top: 12px;
+}
+
+
+/* =========================================================
+   FLASH BRANCO
+========================================================= */
+
+#flash {
+    position: fixed;
+    inset: 0;
+
+    background: white;
+
+    opacity: 0;
+    pointer-events: none;
+
+    z-index: 100000;
+}
+
+#flash.active {
+    animation: whiteFlash 2.5s ease;
+}
+
+@keyframes whiteFlash {
+
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    55% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   SITE
+========================================================= */
+
+#site {
+    display: none;
+}
+
+
+/* =========================================================
+   CORAÇÕES
+========================================================= */
+
+#hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    bottom: -40px;
+
+    animation: heartUp linear forwards;
+
+    opacity: 0;
+}
+
+@keyframes heartUp {
+
+    0% {
+        transform: translateY(0) rotate(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: .8;
+    }
+
+    100% {
+        transform: translateY(-115vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 75px;
+
+    padding: 0 7%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(0,0,0,.88);
+
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid #222;
+
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #a600ff;
+}
+
+nav {
+    display: flex;
+    gap: 28px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: #ff4da6;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 110px 20px 80px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #181818,
+            #050505 50%,
+            #000 80%
+        );
+}
+
+.hero-small {
+    color: #ff4da6;
+    letter-spacing: 5px;
+    font-size: 12px;
+}
+
+.hero h1 {
+    font-size: clamp(70px, 15vw, 180px);
+    line-height: .78;
+    font-weight: 900;
+    margin-top: 20px;
+}
+
+.hero h1 span {
+    display: block;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4da6,
+            #9b4dff,
+            #22d3ee,
+            #ff4da6
+        );
+
+    background-size: 300%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation: gradientMove 5s linear infinite;
+}
+
+@keyframes gradientMove {
+
+    from {
+        background-position: 0%;
+    }
+
+    to {
+        background-position: 300%;
+    }
+}
+
+.hero-description {
+    max-width: 650px;
+
+    color: #888;
+
+    line-height: 1.8;
+
+    margin: 40px auto;
+}
+
+.main-button {
+    display: inline-block;
+
+    padding: 15px 28px;
+
+    color: white;
+    text-decoration: none;
+
+    border: 1px solid white;
+
+    transition: .3s;
+
+    cursor: pointer;
+}
+
+.main-button:hover {
+    background: white;
+    color: black;
+}
+
+
+/* =========================================================
+   SEÇÕES
+========================================================= */
+
+section {
+    position: relative;
+}
+
+.section {
+    padding: 120px 7%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title p {
+    color: #ff4da6;
+    letter-spacing: 4px;
+    font-size: 12px;
+}
+
+.section-title h2 {
+    font-size: clamp(45px, 7vw, 75px);
+    margin: 10px 0;
+}
+
+.section-title span {
+    color: #777;
+}
+
+
+/* =========================================================
+   PROFESSORES
+========================================================= */
+
+.teacher-grid {
+    max-width: 1300px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 25px;
+}
+
+.teacher-card {
+    height: 350px;
+
+    position: relative;
+
+    background: #111;
+
+    border: 1px solid #222;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: .4s;
+}
+
+.teacher-card:hover {
+    transform: translateY(-10px);
+
+    border-color: #ff4da6;
+
+    box-shadow:
+        0 20px 50px rgba(255,77,166,.15);
+}
+
+.teacher-placeholder {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 70px;
+
+    background:
+        radial-gradient(
+            circle,
+            #252525,
+            #090909
+        );
+
+    color: #333;
+}
+
+.teacher-card img {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: 1;
+}
+
+.teacher-card-info {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0,0,0,.98)
+        );
+
+    z-index: 2;
+}
+
+.teacher-card-info small {
+    color: #ff4da6;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+}
+
+.teacher-card-info h3 {
+    font-size: 29px;
+
+    margin-top: 5px;
+}
+
+
+/* =========================================================
+   ATIVIDADES
+========================================================= */
+
+.activities-section {
+    background:
+        radial-gradient(
+            circle at center,
+            #151515,
+            #000 70%
+        );
+}
+
+.activities-grid {
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+
+    gap: 20px;
+}
+
+.activity-card {
+    padding: 30px;
+
+    min-height: 220px;
+
+    background: #0d0d0d;
+
+    border: 1px solid #242424;
+
+    cursor: pointer;
+
+    transition: .35s;
+}
+
+.activity-card:hover {
+    transform: translateY(-8px);
+
+    border-color: #ff4da6;
+
+    background: #111;
+}
+
+.activity-icon {
+    font-size: 45px;
+
+    margin-bottom: 20px;
+}
+
+.activity-card h3 {
+    font-size: 22px;
+
+    margin-bottom: 12px;
+}
+
+.activity-card p {
+    color: #777;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   PONTUAÇÃO
+========================================================= */
+
+.score-board {
+    max-width: 700px;
+
+    margin: 50px auto 0;
+
+    padding: 20px;
+
+    background: #111;
+
+    border: 1px solid #222;
+
+    text-align: center;
+}
+
+.score-board strong {
+    color: #ff4da6;
+
+    font-size: 25px;
+}
+
+
+/* =========================================================
+   SOBRE
+========================================================= */
+
+.about {
+    padding: 140px 20px;
+
+    text-align: center;
+
+    background: #080808;
+}
+
+.about h2 {
+    font-size: clamp(45px, 8vw, 75px);
+}
+
+.about p {
+    max-width: 700px;
+
+    margin: 20px auto;
+
+    color: #888;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 80px 20px 30px;
+
+    border-top: 1px solid #222;
+}
+
+footer h2 {
+    font-size: 35px;
+}
+
+footer p {
+    max-width: 650px;
+
+    margin: 15px auto;
+
+    color: #777;
+
+    line-height: 1.8;
+}
+
+footer strong {
+    color: #ff4da6;
+}
+
+footer small {
+    display: block;
+
+    color: #444;
+
+    margin-top: 50px;
+}
+
+
+/* =========================================================
+   MODAL GERAL
+========================================================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 5000;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-background {
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.92);
+
+    backdrop-filter: blur(10px);
+}
+
+.modal-box {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(1000px,100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #0b0b0b;
+
+    border: 1px solid #333;
+
+    padding: 45px;
+}
+
+.close-button {
+    position: absolute;
+
+    right: 15px;
+    top: 10px;
+
+    width: 40px;
+    height: 40px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 35px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   MODAL PROFESSOR
+========================================================= */
+
+.professor-modal-title {
+    color: #ff4da6;
+
+    letter-spacing: 4px;
+
+    font-size: 11px;
+}
+
+.professor-modal-name {
+    font-size: clamp(40px,7vw,70px);
+
+    margin: 5px 0 20px;
+}
+
+.professor-description {
+    color: #999;
+
+    line-height: 1.8;
+
+    margin-bottom: 30px;
+}
+
+.professor-info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 10px;
+}
+
+.info-box {
+    background: #141414;
+
+    border: 1px solid #222;
+
+    padding: 17px;
+}
+
+.info-box small {
+    display: block;
+
+    color: #666;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 7px;
+}
+
+.info-box b {
+    font-size: 14px;
+}
+
+.quote-box {
+    margin-top: 25px;
+
+    padding: 25px;
+
+    background: #121212;
+
+    border-left: 3px solid #ff4da6;
+}
+
+.quote-box p {
+    color: #bbb;
+
+    font-style: italic;
+
+    line-height: 1.7;
+
+    margin-top: 8px;
+}
+
+.music-box {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background: #121212;
+
+    border: 1px solid #222;
+}
+
+.music-box h3 {
+    color: #ff4da6;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.music-box p {
+    color: #aaa;
+}
+
+.music-box audio {
+    width: 100%;
+
+    margin-top: 15px;
+}
+
+
+/* =========================================================
+   JOGO
+========================================================= */
+
+.game-modal-box {
+    width: min(850px,100%);
+}
+
+.game-title {
+    color: #ff4da6;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+}
+
+.game-modal-box h2 {
+    font-size: 45px;
+
+    margin: 8px 0 25px;
+}
+
+.game-progress {
+    color: #777;
+
+    margin-bottom: 25px;
+}
+
+.question {
+    font-size: 24px;
+
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+.answers {
+    display: grid;
+
+    gap: 12px;
+}
+
+.answer-button {
+    width: 100%;
+
+    padding: 16px;
+
+    text-align: left;
+
+    color: white;
+
+    background: #151515;
+
+    border: 1px solid #292929;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.answer-button:hover {
+    border-color: #ff4da6;
+
+    background: #202020;
+}
+
+.answer-button.correct {
+    border-color: #22c55e;
+
+    background: #12351f;
+}
+
+.answer-button.wrong {
+    border-color: #ef4444;
+
+    background: #351212;
+}
+
+.game-result {
+    text-align: center;
+
+    padding: 30px 0;
+}
+
+.game-result h3 {
+    font-size: 50px;
+
+    color: #ff4da6;
+
+    margin-bottom: 15px;
+}
+
+.next-button {
+    margin-top: 25px;
+
+    padding: 13px 25px;
+
+    border: 1px solid white;
+
+    color: white;
+
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.next-button:hover {
+    background: white;
+
+    color: black;
+}
+
+
+/* =========================================================
+   ADIVINHE O PROFESSOR
+========================================================= */
+
+.guess-hint {
+    padding: 25px;
+
+    background: #151515;
+
+    border-left: 3px solid #9b4dff;
+
+    color: #ccc;
+
+    line-height: 1.8;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   MEMÓRIA
+========================================================= */
+
+.memory-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 10px;
+
+    max-width: 600px;
+
+    margin: 20px auto;
+}
+
+.memory-card {
+    aspect-ratio: 1;
+
+    border: 1px solid #333;
+
+    background: #151515;
+
+    cursor: pointer;
+
+    font-size: 30px;
+
+    transition: .2s;
+}
+
+.memory-card:hover {
+    border-color: #ff4da6;
+}
+
+.memory-card.flipped {
+    background: #222;
+}
+
+.memory-card.matched {
+    background: #241329;
+
+    border-color: #ff4da6;
+}
+
+
+/* =========================================================
+   DESAFIO RELÂMPAGO
+========================================================= */
+
+.timer {
+    text-align: center;
+
+    font-size: 50px;
+
+    color: #ff4da6;
+
+    margin: 15px;
+}
+
+.lightning-question {
+    text-align: center;
+
+    font-size: 24px;
+
+    margin: 25px 0;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media(max-width:700px) {
+
+    nav {
+        display: none;
+    }
+
+    header {
+        justify-content: center;
+    }
+
+    .section {
+        padding: 90px 20px;
+    }
+
+    .professor-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-box {
+        padding: 30px 20px;
+    }
+
+    .memory-grid {
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .game-modal-box h2 {
+        font-size: 35px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOADING
+====================================================== -->
+
+<div id="loading">
+
+    <div class="loading-content">
+
+        <div class="loading-title">
+
+            TEACHER
+
+            <span>
+                WORLD ★
+            </span>
+
+        </div>
+
+        <div class="loading-text">
+            Preparando a sala dos professores...
+        </div>
+
+        <div class="loading-bar">
+
+            <div id="loadingProgress"></div>
+
+        </div>
+
+        <div id="loadingPercent">
+            0%
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="flash"></div>
+
+<div id="hearts"></div>
+
+
+<!-- =====================================================
+     SITE
+====================================================== -->
+
+<div id="site">
+
+
+<header>
+
+    <div class="logo">
+        TEACHER
+        <span>WORLD ★</span>
+    </div>
+
+    <nav>
+
+        <a href="#inicio">
+            Início
+        </a>
+
+        <a href="#professores">
+            Professores
+        </a>
+
+        <a href="#atividades">
+            Atividades
+        </a>
+
+        <a href="#sobre">
+            Sobre
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =====================================================
+     INÍCIO
+====================================================== -->
+
+<section id="inicio" class="hero">
+
+    <div>
+
+        <div class="hero-small">
+            ★ BEM-VINDO AO ★
+        </div>
+
+        <h1>
+
+            TEACHER
+
+            <span>
+                WORLD
+            </span>
+
+        </h1>
+
+        <p class="hero-description">
+
+            Um pequeno universo dedicado aos
+            professores que fazem parte da nossa
+            jornada, com perfis, curiosidades,
+            músicas e atividades interativas.
+
+        </p>
+
+        <a
+            href="#professores"
+            class="main-button"
+        >
+            CONHECER OS PROFESSORES
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROFESSORES
+====================================================== -->
+
+<section
+    id="professores"
+    class="section"
+>
+
+    <div class="section-title">
+
+        <p>
+            ★ NOSSA EQUIPE ★
+        </p>
+
+        <h2>
+            PROFESSORES
+        </h2>
+
+        <span>
+            Clique em um professor para abrir sua ficha.
+        </span>
+
+    </div>
+
+
+    <div
+        id="teacherGrid"
+        class="teacher-grid"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     ATIVIDADES
+====================================================== -->
+
+<section
+    id="atividades"
+    class="section activities-section"
+>
+
+    <div class="section-title">
+
+        <p>
+            ★ HORA DA DIVERSÃO ★
+        </p>
+
+        <h2>
+            ATIVIDADES
+        </h2>
+
+        <span>
+            Teste seus conhecimentos sobre os professores!
+        </span>
+
+    </div>
+
+
+    <div class="activities-grid">
+
+
+        <div
+            class="activity-card"
+            onclick="startQuiz()"
+        >
+
+            <div class="activity-icon">
+                🧠
+            </div>
+
+            <h3>
+                Quiz dos Professores
+            </h3>
+
+            <p>
+                Responda perguntas sobre os
+                professores e acumule pontos.
+            </p>
+
+        </div>
+
+
+        <div
+            class="activity-card"
+            onclick="startGuessGame()"
+        >
+
+            <div class="activity-icon">
+                🔎
+            </div>
+
+            <h3>
+                Adivinhe o Professor
+            </h3>
+
+            <p>
+                Leia as pistas e descubra
+                qual professor está sendo descrito.
+            </p>
+
+        </div>
+
+
+        <div
+            class="activity-card"
+            onclick="startMemory()"
+        >
+
+            <div class="activity-icon">
+                🃏
+            </div>
+
+            <h3>
+                Memória dos Professores
+            </h3>
+
+            <p>
+                Encontre os pares de cartas
+                dos professores.
+            </p>
+
+        </div>
+
+
+        <div
+            class="activity-card"
+            onclick="startLightning()"
+        >
+
+            <div class="activity-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Desafio Relâmpago
+            </h3>
+
+            <p>
+                Você tem poucos segundos para
+                responder corretamente.
+            </p>
+
+        </div>
+
+
+        <div
+            class="activity-card"
+            onclick="startMusicGame()"
+        >
+
+            <div class="activity-icon">
+                🎵
+            </div>
+
+            <h3>
+                Adivinhe a Música
+            </h3>
+
+            <p>
+                Ouça a música cadastrada e tente
+                descobrir de qual professor ela é.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="score-board">
+
+        🏆 Pontuação geral:
+
+        <strong id="globalScore">
+            0
+        </strong>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SOBRE
+====================================================== -->
+
+<section id="sobre" class="about">
+
+    <h2>
+        TEACHER WORLD ★
+    </h2>
+
+    <p>
+
+        Este site foi criado para reunir
+        informações, curiosidades, frases,
+        músicas e momentos especiais dos
+        nossos professores.
+
+    </p>
+
+    <p>
+
+        Porque professor também merece
+        seu próprio universo. 💗
+
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <h2>
+        TEACHER WORLD ★
+    </h2>
+
+    <p>
+        Feito por
+        <strong>
+            Lhaisa & Maria
+        </strong>
+    </p>
+
+    <p>
+
+        Obrigada por cada aula, cada explicação,
+        cada conselho e cada momento que vocês
+        compartilharam conosco. 💗
+
+    </p>
+
+    <p>
+
+        E por favor...
+
+        <br>
+
+        <strong>
+            TENHAM PIEDADE DAS NOSSAS NOTAS 😭🙏
+        </strong>
+
+    </p>
+
+    <small>
+        © 2026 Teacher World
+    </small>
+
+</footer>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL DO PROFESSOR
+====================================================== -->
+
+<div
+    id="professorModal"
+    class="modal"
+>
+
+    <div
+        class="modal-background"
+        onclick="closeProfessor()"
+    ></div>
+
+    <div class="modal-box">
+
+        <button
+            class="close-button"
+            onclick="closeProfessor()"
+        >
+            ×
+        </button>
+
+
+        <div class="professor-modal-title">
+            PROFESSOR
+        </div>
+
+        <h2
+            id="professorName"
+            class="professor-modal-name"
+        >
+            Nome
+        </h2>
+
+        <p
+            id="professorDescription"
+            class="professor-description"
+        >
+            Descrição
+        </p>
+
+
+        <div class="professor-info-grid">
+
+
+            <div class="info-box">
+                <small>🎂 IDADE</small>
+                <b id="professorAge">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>🎨 COR FAVORITA</small>
+                <b id="professorColor">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>🌱 PLANTA FAVORITA</small>
+                <b id="professorPlant">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>📚 ÁREA DE EDUCAÇÃO</small>
+                <b id="professorArea">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>📖 MATÉRIA QUE GOSTA</small>
+                <b id="professorSubject">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>🐾 ANIMAL FAVORITO</small>
+                <b id="professorAnimal">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>😵 TRABALHO MAIS DIFÍCIL</small>
+                <b id="professorDifficulty">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>🏷️ APELIDOS</small>
+                <b id="professorNicknames">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>🏫 ESCOLAS</small>
+                <b id="professorSchools">--</b>
+            </div>
+
+
+            <div class="info-box">
+                <small>📺 DESENHO INFANTIL</small>
+                <b id="professorCartoon">--</b>
+            </div>
+
+
+        </div>
+
+
+        <div class="quote-box">
+
+            💬
+
+            <p id="professorQuote">
+                "Frase icônica."
+            </p>
+
+        </div>
+
+
+        <div class="music-box">
+
+            <h3>
+                🎵 MÚSICA FAVORITA
+            </h3>
+
+            <p id="professorMusic">
+                Música favorita
+            </p>
+
+            <audio
+                id="professorAudio"
+                controls
+            ></audio>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL DOS JOGOS
+====================================================== -->
+
+<div
+    id="gameModal"
+    class="modal"
+>
+
+    <div
+        class="modal-background"
+        onclick="closeGame()"
+    ></div>
+
+    <div class="modal-box game-modal-box">
+
+        <button
+            class="close-button"
+            onclick="closeGame()"
+        >
+            ×
+        </button>
+
+        <div
+            id="gameContent"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   DADOS DOS PROFESSORES
+========================================================= */
+
+const professores = [
+
+    {
+        nome: "Denis Resende de Moraes",
+        imagem: "prof1.jpg",
+        idade: "Nâo identificado",
+        cor: "Azul",
+        planta: "Cacto",
+        comida: "Tudo menos peixe",
+        descricao: "Professor História, Desenvolvimento de Sistemas que gosta de ajudar os alunos a entender assuntos difíceis.",
+        area: "Educaçao",
+        materia: "História e Matemática",
+        animal: "Gato",
+        dificuldade: "Todos os trabalhos de programação.",
+        musica: "Blackbird",
+        audio: "blackbird.mp3",
+        frase: "Está além dos meus conhecimentos históricos.",
+        apelidos: "Senhor feudal & Titio-Avô",
+        escolas: "Em Cianorte: CEEP, Estadual, Igleia, José guimarães, CBJA, Itacilina, Caio, Vidigal. Em outras cidades: Terra boa, Jussará, Tapejara, Tuneiras do oeste (Aparecidinha).",
+        desenho: "He-Man, Pica-pau, Tom & Jerry.",
+    },
+
+    {
+        nome: "Clara",
+        imagem: "prof2.jpg",
+        idade: "XX anos",
+        cor: "Rosa",
+        planta: "Rosa",
+        descricao: "Professora de Português apaixonada por literatura e comunicação.",
+        area: "Linguagens",
+        materia: "Português",
+        animal: "Gato",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica2.mp3",
+        frase: "Frase icônica da professora.",
+        apelidos: "A preencher",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    },
+
+    {
+        nome: "Lucas",
+        imagem: "prof3.jpg",
+        idade: "XX anos",
+        cor: "Verde",
+        planta: "Samambaia",
+        descricao: "Professor de História que gosta de contar histórias sobre o passado.",
+        area: "Ciências Humanas",
+        materia: "História",
+        animal: "Gato",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica3.mp3",
+        frase: "Frase icônica do professor.",
+        apelidos: "A preencher",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    },
+
+    {
+        nome: "Ana",
+        imagem: "prof4.jpg",
+        idade: "XX anos",
+        cor: "Amarelo",
+        planta: "Lírio",
+        descricao: "Professora de Ciências que gosta de explicar como o mundo funciona.",
+        area: "Ciências da Natureza",
+        materia: "Ciências",
+        animal: "Coelho",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica4.mp3",
+        frase: "Frase icônica da professora.",
+        apelidos: "A preencher",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    },
+
+    {
+        nome: "Ricardo",
+        imagem: "prof5.jpg",
+        idade: "XX anos",
+        cor: "Laranja",
+        planta: "Cacto",
+        descricao: "Professor de Geografia que gosta de conhecer diferentes lugares.",
+        area: "Ciências Humanas",
+        materia: "Geografia",
+        animal: "Cachorro",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica5.mp3",
+        frase: "Frase icônica do professor.",
+        apelidos: "A preencher",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    },
+
+    {
+        nome: "Juliana",
+        imagem: "prof6.jpg",
+        idade: "XX anos",
+        cor: "Roxo",
+        planta: "Lavanda",
+        descricao: "Professora de Inglês que gosta de tornar o aprendizado divertido.",
+        area: "Linguagens",
+        materia: "Inglês",
+        animal: "Gato",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica6.mp3",
+        frase: "Frase icônica da professora.",
+        apelidos: "Ju",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    },
+
+    {
+        nome: "Felipe",
+        imagem: "prof7.jpg",
+        idade: "XX anos",
+        cor: "Azul",
+        planta: "Bromélia",
+        descricao: "Professor de Física que relaciona as fórmulas com o cotidiano.",
+        area: "Ciências da Natureza",
+        materia: "Física",
+        animal: "Cachorro",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica7.mp3",
+        frase: "Frase icônica do professor.",
+        apelidos: "A preencher",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    },
+
+    {
+        nome: "Marina",
+        imagem: "prof8.jpg",
+        idade: "XX anos",
+        cor: "Ciano",
+        planta: "Orquídea",
+        descricao: "Professora de Química que mostra a ciência no cotidiano.",
+        area: "Ciências da Natureza",
+        materia: "Química",
+        animal: "Gato",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica8.mp3",
+        frase: "Frase icônica da professora.",
+        apelidos: "Mari",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    },
+
+    {
+        nome: "Daniel",
+        imagem: "prof9.jpg",
+        idade: "XX anos",
+        cor: "Vermelho",
+        planta: "Hortênsia",
+        descricao: "Professor de Educação Física que incentiva os alunos nas atividades.",
+        area: "Educação Física",
+        materia: "Educação Física",
+        animal: "Cachorro",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica9.mp3",
+        frase: "Frase icônica do professor.",
+        apelidos: "Dani",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    },
+
+    {
+        nome: "Luiza",
+        imagem: "prof10.jpg",
+        idade: "XX anos",
+        cor: "Rosa",
+        planta: "Tulipa",
+        descricao: "Professora de Artes que incentiva a criatividade dos alunos.",
+        area: "Artes",
+        materia: "Artes",
+        animal: "Coelho",
+        dificuldade: "A preencher",
+        musica: "Música favorita",
+        audio: "musica10.mp3",
+        frase: "Frase icônica da professora.",
+        apelidos: "Lu",
+        escolas: "A preencher",
+        desenho: "A preencher"
+    }
+
+];
+
+
+/* =========================================================
+   PONTUAÇÃO
+========================================================= */
+
+let pontuacao = 0;
+
+function adicionarPontos(valor) {
+
+    pontuacao += valor;
+
+    document.getElementById("globalScore").textContent =
+        pontuacao;
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+let loadingValue = 0;
+
+const loadingInterval = setInterval(() => {
+
+    loadingValue++;
+
+    document.getElementById("loadingProgress")
+        .style.width = loadingValue + "%";
+
+    document.getElementById("loadingPercent")
+        .textContent = loadingValue + "%";
+
+
+    if (loadingValue >= 100) {
+
+        clearInterval(loadingInterval);
+
+        setTimeout(() => {
+
+            document
+                .getElementById("flash")
+                .classList.add("active");
+
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("site")
+                    .style.display = "block";
+
+                document
+                    .getElementById("loading")
+                    .style.opacity = "0";
+
+
+                setTimeout(() => {
+
+                    document
+                        .getElementById("loading")
+                        .style.display = "none";
+
+                },1500);
+
+            },900);
+
+        },400);
+
+    }
+
+},30);
+
+
+/* =========================================================
+   CRIAR CARDS
+========================================================= */
+
+const teacherGrid =
+    document.getElementById("teacherGrid");
+
+
+professores.forEach((professor,index) => {
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "teacher-card";
+
+
+    const numero =
+        String(index + 1).padStart(2,"0");
+
+
+    card.innerHTML = `
+
+        <div class="teacher-placeholder">
+            👨‍🏫
+        </div>
+
+        <img
+            src="${professor.imagem}"
+            alt="${professor.nome}"
+            onerror="this.style.display='none'"
+        >
+
+        <div class="teacher-card-info">
+
+            <small>
+                PROFESSOR #${numero}
+            </small>
+
+            <h3>
+                ${professor.nome}
+            </h3>
+
+        </div>
+
+    `;
+
+
+    card.onclick = () => {
+        openProfessor(professor,index);
+    };
+
+
+    teacherGrid.appendChild(card);
+
+});
+
+
+/* =========================================================
+   MODAL PROFESSOR
+========================================================= */
+
+function openProfessor(professor,index) {
+
+    document
+        .getElementById("professorModal")
+        .classList.add("show");
+
+
+    document.getElementById("professorName")
+        .textContent =
+        professor.nome;
+
+
+    document.getElementById("professorDescription")
+        .textContent =
+        professor.descricao;
+
+
+    document.getElementById("professorAge")
+        .textContent =
+        professor.idade;
+
+
+    document.getElementById("professorColor")
+        .textContent =
+        professor.cor;
+
+
+    document.getElementById("professorPlant")
+        .textContent =
+        professor.planta;
+
+
+    document.getElementById("professorArea")
+        .textContent =
+        professor.area;
+
+
+    document.getElementById("professorSubject")
+        .textContent =
+        professor.materia;
+
+
+    document.getElementById("professorAnimal")
+        .textContent =
+        professor.animal;
+
+
+    document.getElementById("professorDifficulty")
+        .textContent =
+        professor.dificuldade;
+
+
+    document.getElementById("professorNicknames")
+        .textContent =
+        professor.apelidos;
+
+
+    document.getElementById("professorSchools")
+        .textContent =
+        professor.escolas;
+
+
+    document.getElementById("professorCartoon")
+        .textContent =
+        professor.desenho;
+
+
+    document.getElementById("professorQuote")
+        .textContent =
+        '"' + professor.frase + '"';
+
+
+    document.getElementById("professorMusic")
+        .textContent =
+        professor.musica;
+
+
+    document.getElementById("professorAudio")
+        .src =
+        professor.audio;
+
+}
+
+
+function closeProfessor() {
+
+    document
+        .getElementById("professorModal")
+        .classList.remove("show");
+
+
+    const audio =
+        document.getElementById("professorAudio");
+
+    audio.pause();
+
+    audio.currentTime = 0;
+
+}
+
+
+/* =========================================================
+   CORAÇÕES
+========================================================= */
+
+const heartColors = [
+    "#ff4da6",
+    "#ff1744",
+    "#9b4dff",
+    "#7c3aed",
+    "#22c55e",
+    "#facc15",
+    "#38bdf8",
+    "#22d3ee",
+    "#fb923c"
+];
+
+
+function createHeart() {
+
+    const heart =
+        document.createElement("div");
+
+    heart.className =
+        "heart";
+
+    heart.textContent =
+        Math.random() > .5 ? "♥" : "♡";
+
+
+    heart.style.left =
+        Math.random() * 100 + "vw";
+
+
+    heart.style.color =
+        heartColors[
+            Math.floor(
+                Math.random() *
+                heartColors.length
+            )
+        ];
+
+
+    heart.style.fontSize =
+        (12 + Math.random() * 22) + "px";
+
+
+    heart.style.animationDuration =
+        (5 + Math.random() * 6) + "s";
+
+
+    document
+        .getElementById("hearts")
+        .appendChild(heart);
+
+
+    setTimeout(() => {
+        heart.remove();
+    },12000);
+
+}
+
+
+setInterval(createHeart,500);
+
+
+/* =========================================================
+   QUIZ
+========================================================= */
+
+const quizQuestions = [
+
+    {
+        question:
+            "Qual professor leciona Matemática?",
+
+        answers:
+            [
+                "Gabriel",
+                "Lucas",
+                "Daniel",
+                "Felipe"
+            ],
+
+        correct: 0
+    },
+
+    {
+        question:
+            "Qual professora leciona Português?",
+
+        answers:
+            [
+                "Marina",
+                "Clara",
+                "Ana",
+                "Luiza"
+            ],
+
+        correct: 1
+    },
+
+    {
+        question:
+            "Quem leciona História?",
+
+        answers:
+            [
+                "Ricardo",
+                "Lucas",
+                "Gabriel",
+                "Daniel"
+            ],
+
+        correct: 1
+    },
+
+    {
+        question:
+            "Qual professora leciona Química?",
+
+        answers:
+            [
+                "Marina",
+                "Juliana",
+                "Clara",
+                "Ana"
+            ],
+
+        correct: 0
+    },
+
+    {
+        question:
+            "Quem leciona Educação Física?",
+
+        answers:
+            [
+                "Felipe",
+                "Daniel",
+                "Ricardo",
+                "Gabriel"
+            ],
+
+        correct: 1
+    },
+
+    {
+        question:
+            "Qual professora leciona Artes?",
+
+        answers:
+            [
+                "Luiza",
+                "Ana",
+                "Marina",
+                "Juliana"
+            ],
+
+        correct: 0
+    },
+
+    {
+        question:
+            "Qual professor leciona Física?",
+
+        answers:
+            [
+                "Lucas",
+                "Felipe",
+                "Gabriel",
+                "Ricardo"
+            ],
+
+        correct: 1
+    },
+
+    {
+        question:
+            "Quem leciona Geografia?",
+
+        answers:
+            [
+                "Ricardo",
+                "Daniel",
+                "Lucas",
+                "Felipe"
+            ],
+
+        correct: 0
+    }
+
+];
+
+
+let quizIndex = 0;
+
+let quizScore = 0;
+
+
+function startQuiz() {
+
+    quizIndex = 0;
+
+    quizScore = 0;
+
+    document
+        .getElementById("gameModal")
+        .classList.add("show");
+
+    showQuizQuestion();
+
+}
+
+
+function showQuizQuestion() {
+
+    const game =
+        document.getElementById("gameContent");
+
+
+    if (quizIndex >= quizQuestions.length) {
+
+        game.innerHTML = `
+
+            <div class="game-title">
+                ★ RESULTADO ★
+            </div>
+
+            <div class="game-result">
+
+                <h3>
+                    ${quizScore} / ${quizQuestions.length}
+                </h3>
+
+                <p>
+                    Você terminou o Quiz dos Professores!
+                </p>
+
+                <button
+                    class="next-button"
+                    onclick="closeGame()"
+                >
+                    VOLTAR
+                </button>
+
+            </div>
+
+        `;
+
+        adicionarPontos(quizScore * 10);
+
+        return;
+    }
+
+
+    const q =
+        quizQuestions[quizIndex];
+
+
+    game.innerHTML = `
+
+        <div class="game-title">
+            ★ QUIZ DOS PROFESSORES ★
+        </div>
+
+        <h2>
+            Pergunta ${quizIndex + 1}
+        </h2>
+
+        <div class="game-progress">
+            ${quizIndex + 1}
+            /
+            ${quizQuestions.length}
+        </div>
+
+        <div class="question">
+            ${q.question}
+        </div>
+
+        <div
+            id="answers"
+            class="answers"
+        ></div>
+
+    `;
+
+
+    const answers =
+        document.getElementById("answers");
+
+
+    q.answers.forEach((answer,index) => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "answer-button";
+
+        button.textContent =
+            answer;
+
+
+        button.onclick = () => {
+
+            const buttons =
+                document.querySelectorAll(
+                    ".answer-button"
+                );
+
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+            });
+
+
+            if(index === q.correct) {
+
+                button.classList.add("correct");
+
+                quizScore++;
+
+                adicionarPontos(10);
+
+            } else {
+
+                button.classList.add("wrong");
+
+                buttons[q.correct]
+                    .classList.add("correct");
+
+            }
+
+
+            setTimeout(() => {
+
+                quizIndex++;
+
+                showQuizQuestion();
+
+            },900);
+
+        };
+
+
+        answers.appendChild(button);
+
+    });
+
+}
+
+
+/* =========================================================
+   ADIVINHE O PROFESSOR
+========================================================= */
+
+const guessQuestions = [
+
+    {
+        hint:
+            "Eu trabalho com números, cálculos e problemas matemáticos.",
+
+        answer:
+            "Gabriel"
+    },
+
+    {
+        hint:
+            "Minha área está relacionada a textos, literatura e linguagem.",
+
+        answer:
+            "Clara"
+    },
+
+    {
+        hint:
+            "Gosto de falar sobre acontecimentos do passado.",
+
+        answer:
+            "Lucas"
+    },
+
+    {
+        hint:
+            "Minha matéria envolve reações e substâncias.",
+
+        answer:
+            "Marina"
+    },
+
+    {
+        hint:
+            "Minha aula envolve esportes e atividades físicas.",
+
+        answer:
+            "Daniel"
+    }
+
+];
+
+
+let guessIndex = 0;
+
+
+function startGuessGame() {
+
+    guessIndex = 0;
+
+    document
+        .getElementById("gameModal")
+        .classList.add("show");
+
+    showGuess();
+
+}
+
+
+function showGuess() {
+
+    const game =
+        document.getElementById("gameContent");
+
+
+    if(guessIndex >= guessQuestions.length) {
+
+        game.innerHTML = `
+
+            <div class="game-result">
+
+                <h3>
+                    🎉
+                </h3>
+
+                <p>
+                    Você terminou o desafio!
+                </p>
+
+                <button
+                    class="next-button"
+                    onclick="closeGame()"
+                >
+                    VOLTAR
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    const q =
+        guessQuestions[guessIndex];
+
+
+    game.innerHTML = `
+
+        <div class="game-title">
+            ★ ADIVINHE O PROFESSOR ★
+        </div>
+
+        <h2>
+            Quem sou eu?
+        </h2>
+
+        <div class="guess-hint">
+            💡 ${q.hint}
+        </div>
+
+        <div
+            id="guessAnswers"
+            class="answers"
+        ></div>
+
+    `;
+
+
+    const container =
+        document.getElementById("guessAnswers");
+
+
+    professores.forEach((professor) => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "answer-button";
+
+        button.textContent =
+            professor.nome;
+
+
+        button.onclick = () => {
+
+            if(
+                professor.nome ===
+                q.answer
+            ) {
+
+                button.classList.add("correct");
+
+                adicionarPontos(20);
+
+            } else {
+
+                button.classList.add("wrong");
+
+            }
+
+
+            document
+                .querySelectorAll(".answer-button")
+                .forEach(btn => {
+                    btn.disabled = true;
+                });
+
+
+            setTimeout(() => {
+
+                guessIndex++;
+
+                showGuess();
+
+            },900);
+
+        };
+
+
+        container.appendChild(button);
+
+    });
+
+}
+
+
+/* =========================================================
+   MEMÓRIA
+========================================================= */
+
+let memoryFirst = null;
+
+let memorySecond = null;
+
+let memoryLock = false;
+
+let memoryMatches = 0;
+
+
+function startMemory() {
+
+    memoryFirst = null;
+
+    memorySecond = null;
+
+    memoryLock = false;
+
+    memoryMatches = 0;
+
+
+    document
+        .getElementById("gameModal")
+        .classList.add("show");
+
+
+    const selected =
+        professores.slice(0,6);
+
+
+    let cards = [];
+
+
+    selected.forEach((professor,index) => {
+
+        cards.push({
+            id: index,
+            name: professor.nome
+        });
+
+        cards.push({
+            id: index,
+            name: professor.nome
+        });
+
+    });
+
+
+    cards.sort(() =>
+        Math.random() - .5
+    );
+
+
+    const game =
+        document.getElementById("gameContent");
+
+
+    game.innerHTML = `
+
+        <div class="game-title">
+            ★ JOGO DA MEMÓRIA ★
+        </div>
+
+        <h2>
+            Encontre os pares!
+        </h2>
+
+        <div
+            id="memoryGrid"
+            class="memory-grid"
+        ></div>
+
+    `;
+
+
+    const grid =
+        document.getElementById("memoryGrid");
+
+
+    cards.forEach((card,index) => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "memory-card";
+
+        button.dataset.id =
+            card.id;
+
+        button.dataset.index =
+            index;
+
+        button.textContent =
+            "★";
+
+
+        button.onclick = () => {
+
+            flipMemoryCard(
+                button,
+                card
+            );
+
+        };
+
+
+        grid.appendChild(button);
+
+    });
+
+}
+
+
+function flipMemoryCard(button,card) {
+
+    if(
+        memoryLock ||
+        button.classList.contains("flipped") ||
+        button.classList.contains("matched")
+    ) {
+        return;
+    }
+
+
+    button.classList.add("flipped");
+
+    button.textContent =
+        "👨‍🏫";
+
+
+    if(!memoryFirst) {
+
+        memoryFirst = {
+            button,
+            card
+        };
+
+        return;
+    }
+
+
+    memorySecond = {
+        button,
+        card
+    };
+
+
+    memoryLock = true;
+
+
+    if(
+        memoryFirst.card.id ===
+        memorySecond.card.id
+    ) {
+
+        memoryFirst.button
+            .classList.add("matched");
+
+        memorySecond.button
+            .classList.add("matched");
+
+
+        memoryMatches++;
+
+        adicionarPontos(15);
+
+
+        memoryFirst = null;
+
+        memorySecond = null;
+
+        memoryLock = false;
+
+
+        if(memoryMatches === 6) {
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("gameContent")
+                    .insertAdjacentHTML(
+                        "beforeend",
+                        `
+                        <div class="game-result">
+                            <p>
+                                🎉 Todos os pares encontrados!
+                            </p>
+                        </div>
+                        `
+                    );
+
+            },500);
+
+        }
+
+
+    } else {
+
+        setTimeout(() => {
+
+            memoryFirst.button
+                .classList.remove("flipped");
+
+            memorySecond.button
+                .classList.remove("flipped");
+
+
+            memoryFirst.button.textContent =
+                "★";
+
+            memorySecond.button.textContent =
+                "★";
+
+
+            memoryFirst = null;
+
+            memorySecond = null;
+
+            memoryLock = false;
+
+        },800);
+
+    }
+
+}
+
+
+/* =========================================================
+   DESAFIO RELÂMPAGO
+========================================================= */
+
+let lightningQuestions = [
+
+    {
+        q: "Qual professor ensina Matemática?",
+        a: ["Gabriel","Lucas","Daniel"],
+        correct: 0
+    },
+
+    {
+        q: "Quem ensina Química?",
+        a: ["Ana","Marina","Clara"],
+        correct: 1
+    },
+
+    {
+        q: "Quem ensina Artes?",
+        a: ["Luiza","Juliana","Marina"],
+        correct: 0
+    },
+
+    {
+        q: "Quem ensina Física?",
+        a: ["Ricardo","Felipe","Gabriel"],
+        correct: 1
+    }
+
+];
+
+
+let lightningIndex = 0;
+
+let lightningTime = 10;
+
+let lightningTimer;
+
+
+function startLightning() {
+
+    lightningIndex = 0;
+
+    document
+        .getElementById("gameModal")
+        .classList.add("show");
+
+    showLightning();
+
+}
+
+
+function showLightning() {
+
+    clearInterval(lightningTimer);
+
+
+    if(
+        lightningIndex >=
+        lightningQuestions.length
+    ) {
+
+        document
+            .getElementById("gameContent")
+            .innerHTML = `
+
+                <div class="game-result">
+
+                    <h3>
+                        ⚡
+                    </h3>
+
+                    <p>
+                        Desafio terminado!
+                    </p>
+
+                    <button
+                        class="next-button"
+                        onclick="closeGame()"
+                    >
+                        VOLTAR
+                    </button>
+
+                </div>
+
+            `;
+
+        return;
+    }
+
+
+    const question =
+        lightningQuestions[lightningIndex];
+
+
+    lightningTime = 10;
+
+
+    const game =
+        document.getElementById("gameContent");
+
+
+    game.innerHTML = `
+
+        <div class="game-title">
+            ★ DESAFIO RELÂMPAGO ★
+        </div>
+
+        <div
+            id="lightningTimer"
+            class="timer"
+        >
+            10
+        </div>
+
+        <div class="lightning-question">
+            ${question.q}
+        </div>
+
+        <div
+            id="lightningAnswers"
+            class="answers"
+        ></div>
+
+    `;
+
+
+    const container =
+        document.getElementById("lightningAnswers");
+
+
+    question.a.forEach((answer,index) => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "answer-button";
+
+        button.textContent =
+            answer;
+
+
+        button.onclick = () => {
+
+            clearInterval(lightningTimer);
+
+            if(index === question.correct) {
+
+                button.classList.add("correct");
+
+                adicionarPontos(15);
+
+            } else {
+
+                button.classList.add("wrong");
+
+            }
+
+
+            document
+                .querySelectorAll(".answer-button")
+                .forEach(btn => {
+                    btn.disabled = true;
+                });
+
+
+            setTimeout(() => {
+
+                lightningIndex++;
+
+                showLightning();
+
+            },700);
+
+        };
+
+
+        container.appendChild(button);
+
+    });
+
+
+    lightningTimer =
+        setInterval(() => {
+
+            lightningTime--;
+
+
+            const timer =
+                document.getElementById(
+                    "lightningTimer"
+                );
+
+
+            if(timer) {
+
+                timer.textContent =
+                    lightningTime;
+
+            }
+
+
+            if(lightningTime <= 0) {
+
+                clearInterval(lightningTimer);
+
+                lightningIndex++;
+
+                showLightning();
+
+            }
+
+        },1000);
+
+}
+
+
+/* =========================================================
+   ADIVINHE A MÚSICA
+========================================================= */
+
+function startMusicGame() {
+
+    document
+        .getElementById("gameModal")
+        .classList.add("show");
+
+
+    const game =
+        document.getElementById("gameContent");
+
+
+    const professor =
+        professores[
+            Math.floor(
+                Math.random() *
+                professores.length
+            )
+        ];
+
+
+    game.innerHTML = `
+
+        <div class="game-title">
+            ★ ADIVINHE A MÚSICA ★
+        </div>
+
+        <h2>
+            De quem é essa música?
+        </h2>
+
+        <p style="color:#888;line-height:1.8;">
+            Escute a música cadastrada e escolha
+            qual professor está associado a ela.
+        </p>
+
+        <div class="music-box">
+
+            <p>
+                🎵 ${professor.musica}
+            </p>
+
+            <audio
+                src="${professor.audio}"
+                controls
+            ></audio>
+
+        </div>
+
+        <div
+            id="musicAnswers"
+            class="answers"
+            style="margin-top:20px;"
+        ></div>
+
+    `;
+
+
+    const answers =
+        document.getElementById(
+            "musicAnswers"
+        );
+
+
+    professores.forEach((p) => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "answer-button";
+
+        button.textContent =
+            p.nome;
+
+
+        button.onclick = () => {
+
+            document
+                .querySelectorAll(".answer-button")
+                .forEach(btn => {
+                    btn.disabled = true;
+                });
+
+
+            if(p.nome === professor.nome) {
+
+                button.classList.add("correct");
+
+                adicionarPontos(25);
+
+            } else {
+
+                button.classList.add("wrong");
+
+            }
+
+        };
+
+
+        answers.appendChild(button);
+
+    });
+
+}
+
+
+/* =========================================================
+   FECHAR JOGO
+========================================================= */
+
+function closeGame() {
+
+    document
+        .getElementById("gameModal")
+        .classList.remove("show");
+
+
+    clearInterval(lightningTimer);
+
+}
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if(event.key === "Escape") {
+
+            closeProfessor();
+
+            closeGame();
+
+        }
+
+    }
+);
+
+
+console.log(
+    "Teacher World carregado com sucesso! ★"
+);
+
+</script>
+
+</body>
+</html>
+```
